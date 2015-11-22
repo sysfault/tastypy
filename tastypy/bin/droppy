@@ -1,0 +1,24 @@
+#!/usr/bin/env python2
+
+import os
+import sys
+import shutil
+
+if len(sys.argv) != 2:
+    raise RuntimeError("missing program name")
+if sys.argv[1].startswith('.') or sys.argv[1].startswith('/'):
+    raise RuntimeError("i didn't ask for a path")
+
+d = os.path.join(os.path.dirname(sys.argv[0]), '..', 'programs', sys.argv[1])
+f = os.path.join(os.path.dirname(sys.argv[0]), sys.argv[1])
+
+if not os.path.exists(d) or not os.path.exists(f):
+    raise RuntimeError("can't find the program")
+print("removing folder %s" % d)
+shutil.rmtree(d)
+print("removing symlink %s" % f)
+os.unlink(f)
+sys.exit(0)
+
+
+

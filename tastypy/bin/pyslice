@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ "X${PYTHON}X" = "XX" ]; then
+    PYTHON=python2 
+fi
+
+program_name=$(basename $0)
+if [ ${program_name} = "pyslice" ]; then
+    echo "pyslice is not supposed to be executed directly"
+    exit 1
+fi
+
+PYTHONPATH=$PYTHONPATH:$(dirname $0)/../..
+TASTYPYDEBUG=1
+echo "executing tastypy.programs.$(basename $0)"
+exec $PYTHON -m  tastypy.programs.$(basename $0) $*
+
+

@@ -1,0 +1,27 @@
+#!/usr/bin/env python2
+# -*- fileencoding: utf-8 -*-
+import os
+import sys
+
+if len(sys.argv) != 2:
+    raise RuntimeError("missing arguments: program name")
+if os.path.exists(os.path.join(os.path.dirname(sys.argv[0]), '..', 'programs', sys.argv[1])):
+    raise RuntimeError("there is a program already named %s" % sys.argv[1])
+if os.path.exists(os.path.join(os.path.dirname(sys.argv[0]), sys.argv[1])):
+    raise RuntimeError("symlinks %s found in bin directory" % sys.argv[1])
+
+program_header = """#!/usr/bin/env python2
+# -*- fineencoding: utf-8 -*-
+print("hello, world! this is program %s talking")
+""" % sys.argv[1]
+
+progdir = os.path.join(os.path.dirname(sys.argv[0]), '..', 'programs', sys.argv[1])
+os.mkdir(progdir)
+with open(os.path.join(progdir, '__main__.py'), 'w') as pyfile:
+    pyfile.write(program_header)
+with open(os.path.join(progdir, '__init__.py'), 'w') as pyfile:
+    pass
+
+os.symlink(os.path.join(os.path.dirname(sys.argv[0]), 'pyslice'),
+        os.path.join(os.path.dirname(sys.argv[0]), sys.argv[1]))
+
