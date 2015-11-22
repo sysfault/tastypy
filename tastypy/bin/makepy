@@ -11,7 +11,7 @@ if os.path.exists(os.path.join(os.path.dirname(sys.argv[0]), sys.argv[1])):
     raise RuntimeError("symlinks %s found in bin directory" % sys.argv[1])
 
 program_header = """#!/usr/bin/env python2
-# -*- fineencoding: utf-8 -*-
+# -*- fileencoding: utf-8 -*-
 print("hello, world! this is program %s talking")
 """ % sys.argv[1]
 
